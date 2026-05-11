@@ -11,6 +11,10 @@ const contextPanel = document.querySelector("#contextPanel");
 const panelScrim = document.querySelector("#panelScrim");
 const mobilePanelButton = document.querySelector("#mobilePanelButton");
 const closePanelButton = document.querySelector("#closePanelButton");
+const templateList = document.querySelector("#templateList");
+const taskList = document.querySelector("#taskList");
+const taskProgress = document.querySelector("#taskProgress");
+const evidenceList = document.querySelector("#evidenceList");
 const languageKey = "portfolio-language";
 
 const translations = {
@@ -36,6 +40,22 @@ const translations = {
     "Sources": "來源",
     "Summarize": "摘要",
     "Workspace status": "工作區狀態",
+    "Workspace workflows": "工作區流程",
+    "Prompt templates": "Prompt 範本",
+    "Mock shortcuts": "Mock 快捷操作",
+    "Decision tasks": "決策任務",
+    "0/0 complete": "0/0 完成",
+    "Risk table": "風險表",
+    "Create a table with severity, owner, source, and mitigation.": "建立包含嚴重度、負責人、來源與緩解方式的表格。",
+    "Executive memo": "高層 memo",
+    "Summarize the decision, evidence, tradeoffs, and next step.": "摘要決策、證據、取捨與下一步。",
+    "Source comparison": "來源比較",
+    "Compare interviews, pipeline data, and market scan signals.": "比較訪談、pipeline 資料與市場掃描訊號。",
+    "Extract top three customer quotes": "擷取前三個客戶 quote",
+    "Validate SMB discount floor": "驗證 SMB 折扣底線",
+    "Draft enterprise pilot narrative": "撰寫企業 pilot 敘事",
+    "Assign launch-readiness owners": "指派上市準備負責人",
+    "complete": "完成",
     "connected files": "已連結檔案",
     "confidence": "信心分數",
     "open decisions": "待決策事項",
@@ -69,6 +89,14 @@ const translations = {
     "Ready": "就緒",
     "Approve the enterprise pilot narrative and hold SMB expansion until pricing sensitivity is validated with finance.": "核准企業版 pilot 敘事，並暫緩 SMB 擴張，直到財務驗證價格敏感度。",
     "Evidence strength": "證據強度",
+    "Evidence review": "證據審查",
+    "Live mock": "即時 mock",
+    "Security review mentioned in 5 enterprise notes": "5 則企業筆記提到安全審查",
+    "Q2 market scan · confidence high": "Q2 市場掃描 · 高信心",
+    "Pipeline movement strongest in regulated accounts": "受監管帳戶的 pipeline 變化最強",
+    "Pipeline CSV · 42 matched rows": "Pipeline CSV · 符合 42 列",
+    "SMB discount tolerance still unresolved": "SMB 折扣容忍度仍未解決",
+    "Finance follow-up · needs owner": "財務追蹤 · 需要負責人",
     "High": "高",
     "Command palette": "命令面板",
     "Search commands, files, and actions": "搜尋命令、檔案與操作",
@@ -100,6 +128,22 @@ const translations = {
     "Sources": "ソース",
     "Summarize": "要約",
     "Workspace status": "ワークスペース状態",
+    "Workspace workflows": "ワークスペースワークフロー",
+    "Prompt templates": "プロンプトテンプレート",
+    "Mock shortcuts": "モックショートカット",
+    "Decision tasks": "意思決定タスク",
+    "0/0 complete": "0/0 完了",
+    "Risk table": "リスク表",
+    "Create a table with severity, owner, source, and mitigation.": "重要度、担当者、ソース、対策を含む表を作成します。",
+    "Executive memo": "エグゼクティブメモ",
+    "Summarize the decision, evidence, tradeoffs, and next step.": "判断、証拠、トレードオフ、次の一手を要約します。",
+    "Source comparison": "ソース比較",
+    "Compare interviews, pipeline data, and market scan signals.": "インタビュー、パイプラインデータ、市場スキャンを比較します。",
+    "Extract top three customer quotes": "上位 3 件の顧客引用を抽出",
+    "Validate SMB discount floor": "SMB 割引下限を検証",
+    "Draft enterprise pilot narrative": "エンタープライズ pilot 方針を作成",
+    "Assign launch-readiness owners": "ローンチ準備担当者を割り当て",
+    "complete": "完了",
     "connected files": "接続ファイル",
     "confidence": "信頼度",
     "open decisions": "未決事項",
@@ -133,6 +177,14 @@ const translations = {
     "Ready": "準備完了",
     "Approve the enterprise pilot narrative and hold SMB expansion until pricing sensitivity is validated with finance.": "エンタープライズ向けパイロット方針を承認し、価格感度を財務で検証するまで SMB 拡大を保留します。",
     "Evidence strength": "証拠の強さ",
+    "Evidence review": "証拠レビュー",
+    "Live mock": "ライブモック",
+    "Security review mentioned in 5 enterprise notes": "5 件のエンタープライズノートでセキュリティレビューに言及",
+    "Q2 market scan · confidence high": "Q2 市場スキャン · 信頼度高",
+    "Pipeline movement strongest in regulated accounts": "規制業界アカウントでパイプライン変化が最も強い",
+    "Pipeline CSV · 42 matched rows": "Pipeline CSV · 42 行一致",
+    "SMB discount tolerance still unresolved": "SMB 割引許容度は未解決",
+    "Finance follow-up · needs owner": "財務フォローアップ · 担当者が必要",
     "High": "高",
     "Command palette": "コマンドパレット",
     "Search commands, files, and actions": "コマンド、ファイル、アクションを検索",
@@ -265,6 +317,25 @@ Useful next actions:
 • Ask finance for a discount floor on high-volume SMB opportunities.
 • Create a launch-readiness checklist for enablement, security, and customer success.`;
 
+const promptTemplates = [
+  { title: "Risk table", detail: "Create a table with severity, owner, source, and mitigation.", prompt: "Turn the market notes into a risk table with severity, owner, source, and mitigation." },
+  { title: "Executive memo", detail: "Summarize the decision, evidence, tradeoffs, and next step.", prompt: "Draft an executive decision memo with evidence, tradeoffs, and a recommended next step." },
+  { title: "Source comparison", detail: "Compare interviews, pipeline data, and market scan signals.", prompt: "Compare the uploaded interviews, pipeline data, and market scan. Highlight agreement and contradictions." }
+];
+
+const decisionTasks = [
+  "Extract top three customer quotes",
+  "Validate SMB discount floor",
+  "Draft enterprise pilot narrative",
+  "Assign launch-readiness owners"
+];
+
+const evidenceItems = [
+  { title: "Security review mentioned in 5 enterprise notes", meta: "Q2 market scan · confidence high" },
+  { title: "Pipeline movement strongest in regulated accounts", meta: "Pipeline CSV · 42 matched rows" },
+  { title: "SMB discount tolerance still unresolved", meta: "Finance follow-up · needs owner" }
+];
+
 let streamTimer;
 
 function currentBriefText() {
@@ -334,6 +405,40 @@ function resizeComposer() {
   promptInput.style.height = `${Math.min(promptInput.scrollHeight, 140)}px`;
 }
 
+function renderTemplates() {
+  templateList.innerHTML = promptTemplates.map((template, index) => `
+    <button class="template-button" type="button" data-template-index="${index}">
+      <strong>${template.title}</strong>
+      <small>${template.detail}</small>
+    </button>
+  `).join("");
+}
+
+function renderTasks() {
+  taskList.innerHTML = decisionTasks.map((task, index) => `
+    <label class="task-row">
+      <input type="checkbox" ${index === 0 ? "checked" : ""}>
+      <span>${task}</span>
+    </label>
+  `).join("");
+  updateTaskProgress();
+}
+
+function updateTaskProgress() {
+  const checks = [...taskList.querySelectorAll("input")];
+  const complete = checks.filter((check) => check.checked).length;
+  taskProgress.textContent = `${complete}/${checks.length} ${translateValue("complete")}`;
+}
+
+function renderEvidence() {
+  evidenceList.innerHTML = evidenceItems.map((item) => `
+    <article class="evidence-row">
+      <strong>${item.title}</strong>
+      <span>${item.meta}</span>
+    </article>
+  `).join("");
+}
+
 paletteButton.addEventListener("click", openPalette);
 summarizeButton.addEventListener("click", () => streamText(currentBriefText()));
 themeButton.addEventListener("click", () => {
@@ -366,6 +471,17 @@ document.addEventListener("keydown", (event) => {
 
 promptInput.addEventListener("input", resizeComposer);
 
+templateList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-template-index]");
+  if (!button) return;
+  const template = promptTemplates[Number(button.dataset.templateIndex)];
+  promptInput.value = template.prompt;
+  resizeComposer();
+  promptInput.focus();
+});
+
+taskList.addEventListener("change", updateTaskProgress);
+
 composer.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = promptInput.value.trim();
@@ -395,5 +511,8 @@ document.querySelectorAll("[data-lang]").forEach((button) => {
   });
 });
 
+renderTemplates();
+renderTasks();
+renderEvidence();
 translatePage();
 streamText(currentBriefText());

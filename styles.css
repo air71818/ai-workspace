@@ -312,6 +312,79 @@ h2 {
   margin: 24px 0;
 }
 
+.workflow-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.workflow-card,
+.evidence-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+
+.workflow-head,
+.template-button,
+.task-row,
+.evidence-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workflow-head h2 {
+  font-size: 16px;
+}
+
+.workflow-head span,
+.template-button small,
+.task-row small,
+.evidence-row span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.template-list,
+.task-list,
+.evidence-list {
+  display: grid;
+  gap: 8px;
+}
+
+.template-button,
+.task-row,
+.evidence-row {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--text);
+  text-align: left;
+}
+
+.template-button {
+  display: grid;
+  justify-items: start;
+}
+
+.task-row {
+  justify-content: flex-start;
+}
+
+.task-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
 .status-strip div {
   padding: 16px;
   border: 1px solid var(--line);
@@ -501,6 +574,19 @@ h2 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface-strong);
+}
+
+.evidence-card {
+  margin-top: 14px;
+}
+
+.evidence-row {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.evidence-row strong {
+  font-size: 13px;
 }
 
 .source-card {
@@ -755,6 +841,10 @@ kbd {
   .status-strip {
     grid-template-columns: 1fr;
     margin: 18px 0;
+  }
+
+  .workflow-grid {
+    grid-template-columns: 1fr;
   }
 
   .chat-panel {

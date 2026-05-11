@@ -98,6 +98,23 @@
           </div>
         </section>
 
+        <section class="workflow-grid" aria-label="Workspace workflows">
+          <article class="workflow-card">
+            <div class="workflow-head">
+              <h2>Prompt templates</h2>
+              <span>Mock shortcuts</span>
+            </div>
+            <div class="template-list" id="templateList"></div>
+          </article>
+          <article class="workflow-card">
+            <div class="workflow-head">
+              <h2>Decision tasks</h2>
+              <span id="taskProgress">0/0 complete</span>
+            </div>
+            <div class="task-list" id="taskList"></div>
+          </article>
+        </section>
+
         <section class="chat-panel" aria-label="Chat thread">
           <div class="chat-scroll" id="chatScroll" aria-live="polite">
             <article class="message user-message">
@@ -201,6 +218,14 @@
             <strong>High</strong>
           </div>
           <div class="progress-track" aria-hidden="true"><span></span></div>
+        </section>
+
+        <section class="evidence-card">
+          <div class="insight-header">
+            <h2>Evidence review</h2>
+            <span>Live mock</span>
+          </div>
+          <div class="evidence-list" id="evidenceList"></div>
         </section>
       </aside>
     </div>
