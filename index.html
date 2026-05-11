@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="AI Workspace portfolio project" />
+    <title>AI Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="workspace-nav" aria-label="Workspace navigation">
+        <a class="brand" href="#" aria-label="AI Workspace home">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <span>
+            <strong>AI Workspace</strong>
+            <small>Research cockpit</small>
+          </span>
+        </a>
+
+        <button class="nav-action" id="newThreadButton" type="button">
+          <span aria-hidden="true">+</span>
+          New thread
+        </button>
+
+        <nav class="thread-list" aria-label="Recent threads">
+          <button class="thread-item active" type="button">
+            <span class="thread-icon" aria-hidden="true">01</span>
+            <span>
+              <strong>Market brief</strong>
+              <small>4 sources · just now</small>
+            </span>
+          </button>
+          <button class="thread-item" type="button">
+            <span class="thread-icon" aria-hidden="true">02</span>
+            <span>
+              <strong>Launch checklist</strong>
+              <small>12 tasks · yesterday</small>
+            </span>
+          </button>
+          <button class="thread-item" type="button">
+            <span class="thread-icon" aria-hidden="true">03</span>
+            <span>
+              <strong>Support trends</strong>
+              <small>8 files · Apr 28</small>
+            </span>
+          </button>
+        </nav>
+
+        <div class="nav-footer">
+          <button class="icon-button" id="paletteButton" type="button" aria-label="Open command palette">
+            <span aria-hidden="true">⌘</span>
+          </button>
+          <button class="icon-button" id="themeButton" type="button" aria-label="Toggle appearance">
+            <span aria-hidden="true">◐</span>
+          </button>
+          <button class="profile-button" type="button" aria-label="Open user menu">
+            <span aria-hidden="true">TK</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace-main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Live workspace</p>
+            <h1>Market intelligence thread</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-button" id="mobilePanelButton" type="button">Sources</button>
+            <button class="primary-button" id="summarizeButton" type="button">Summarize</button>
+          </div>
+        </header>
+
+        <section class="status-strip" aria-label="Workspace status">
+          <div>
+            <strong>12</strong>
+            <span>connected files</span>
+          </div>
+          <div>
+            <strong>97%</strong>
+            <span>confidence</span>
+          </div>
+          <div>
+            <strong>3</strong>
+            <span>open decisions</span>
+          </div>
+        </section>
+
+        <section class="chat-panel" aria-label="Chat thread">
+          <div class="chat-scroll" id="chatScroll" aria-live="polite">
+            <article class="message user-message">
+              <div class="avatar">TK</div>
+              <div class="message-body">
+                <div class="message-meta">
+                  <strong>You</strong>
+                  <span>09:41</span>
+                </div>
+                <p>
+                  Build a concise market brief from the uploaded notes. Flag risks, quote useful
+                  source material, and suggest the next executive decision.
+                </p>
+              </div>
+            </article>
+
+            <article class="message ai-message">
+              <div class="avatar ai">AI</div>
+              <div class="message-body">
+                <div class="message-meta">
+                  <strong>Workspace AI</strong>
+                  <span>streaming</span>
+                </div>
+                <div id="streamingResponse" class="streaming-response"></div>
+                <div class="message-tools">
+                  <button type="button">Insert into brief</button>
+                  <button type="button">Create tasks</button>
+                  <button type="button">Compare sources</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <form class="composer" id="composer">
+            <button class="icon-button" type="button" aria-label="Attach file">＋</button>
+            <label class="visually-hidden" for="promptInput">Ask AI Workspace</label>
+            <textarea
+              id="promptInput"
+              rows="1"
+              placeholder="Ask for a sharper brief, a risk table, or a source-backed recommendation..."
+            ></textarea>
+            <button class="send-button" type="submit" aria-label="Send message">↑</button>
+          </form>
+        </section>
+      </main>
+
+      <aside class="context-panel" id="contextPanel" aria-label="Sources and workspace context">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Context</p>
+            <h2>Sources</h2>
+          </div>
+          <button class="icon-button close-panel" id="closePanelButton" type="button" aria-label="Close sources">
+            ×
+          </button>
+        </div>
+
+        <div class="search-card">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" placeholder="Search files, notes, and citations" aria-label="Search context" />
+        </div>
+
+        <section class="source-stack" aria-label="Source files">
+          <article class="source-card selected">
+            <div class="file-type">PDF</div>
+            <div>
+              <h3>Q2 market scan</h3>
+              <p>Pricing pressure, category shifts, and enterprise adoption signals.</p>
+              <span>18 citations</span>
+            </div>
+          </article>
+          <article class="source-card">
+            <div class="file-type sheet">CSV</div>
+            <div>
+              <h3>Pipeline movement</h3>
+              <p>Regional movement by segment with quarter-over-quarter trend notes.</p>
+              <span>42 rows matched</span>
+            </div>
+          </article>
+          <article class="source-card">
+            <div class="file-type note">DOC</div>
+            <div>
+              <h3>Customer interviews</h3>
+              <p>Six calls tagged by churn risk, buying committee, and rollout friction.</p>
+              <span>9 highlights</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="insight-card">
+          <div class="insight-header">
+            <h2>Next decision</h2>
+            <span>Ready</span>
+          </div>
+          <p>
+            Approve the enterprise pilot narrative and hold SMB expansion until pricing sensitivity
+            is validated with finance.
+          </p>
+          <div class="progress-row">
+            <span>Evidence strength</span>
+            <strong>High</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span></span></div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="panel-scrim" id="panelScrim" hidden></div>
+
+    <section class="command-palette" id="commandPalette" aria-modal="true" role="dialog" aria-label="Command palette" hidden>
+      <div class="palette-surface">
+        <div class="palette-search">
+          <span aria-hidden="true">⌘</span>
+          <input id="paletteInput" type="search" placeholder="Search commands, files, and actions" />
+        </div>
+        <div class="command-list" role="listbox">
+          <button type="button" role="option">
+            <span>Generate executive summary</span>
+            <kbd>G</kbd>
+          </button>
+          <button type="button" role="option">
+            <span>Compare selected sources</span>
+            <kbd>C</kbd>
+          </button>
+          <button type="button" role="option">
+            <span>Create decision memo</span>
+            <kbd>M</kbd>
+          </button>
+          <button type="button" role="option">
+            <span>Export thread</span>
+            <kbd>E</kbd>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
