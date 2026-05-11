@@ -15,6 +15,8 @@ const templateList = document.querySelector("#templateList");
 const taskList = document.querySelector("#taskList");
 const taskProgress = document.querySelector("#taskProgress");
 const evidenceList = document.querySelector("#evidenceList");
+const briefDocument = document.querySelector("#briefDocument");
+const toolRunList = document.querySelector("#toolRunList");
 const languageKey = "portfolio-language";
 
 const translations = {
@@ -41,6 +43,15 @@ const translations = {
     "Summarize": "摘要",
     "Workspace status": "工作區狀態",
     "Workspace workflows": "工作區流程",
+    "Generated brief preview": "產生的簡報預覽",
+    "Generated brief": "產生的簡報",
+    "Editable mock document": "可編輯 mock 文件",
+    "Recommendation": "建議",
+    "Approve an enterprise-first pilot and keep SMB expansion in discovery.": "核准企業優先 pilot，並讓 SMB 擴張維持 discovery。",
+    "Evidence": "證據",
+    "Security review and rollout ownership appear across the highest-confidence sources.": "安全審查與導入 ownership 出現在最高信心來源中。",
+    "Next step": "下一步",
+    "Assign owners for finance validation, enablement, and executive narrative.": "為財務驗證、enablement 與高層敘事指派負責人。",
     "Prompt templates": "Prompt 範本",
     "Mock shortcuts": "Mock 快捷操作",
     "Decision tasks": "決策任務",
@@ -90,6 +101,14 @@ const translations = {
     "Approve the enterprise pilot narrative and hold SMB expansion until pricing sensitivity is validated with finance.": "核准企業版 pilot 敘事，並暫緩 SMB 擴張，直到財務驗證價格敏感度。",
     "Evidence strength": "證據強度",
     "Evidence review": "證據審查",
+    "Tool runs": "工具執行",
+    "3 active": "3 個進行中",
+    "Source retrieval": "來源擷取",
+    "PDF, CSV, DOC": "PDF、CSV、DOC",
+    "Risk extraction": "風險擷取",
+    "interviews + notes": "訪談 + 筆記",
+    "Memo drafting": "Memo 起草",
+    "executive brief": "高層簡報",
     "Live mock": "即時 mock",
     "Security review mentioned in 5 enterprise notes": "5 則企業筆記提到安全審查",
     "Q2 market scan · confidence high": "Q2 市場掃描 · 高信心",
@@ -129,6 +148,15 @@ const translations = {
     "Summarize": "要約",
     "Workspace status": "ワークスペース状態",
     "Workspace workflows": "ワークスペースワークフロー",
+    "Generated brief preview": "生成ブリーフプレビュー",
+    "Generated brief": "生成ブリーフ",
+    "Editable mock document": "編集可能なモック文書",
+    "Recommendation": "推奨",
+    "Approve an enterprise-first pilot and keep SMB expansion in discovery.": "エンタープライズ優先 pilot を承認し、SMB 拡大は探索段階に留めます。",
+    "Evidence": "証拠",
+    "Security review and rollout ownership appear across the highest-confidence sources.": "セキュリティレビューと展開責任が高信頼ソースに共通して現れます。",
+    "Next step": "次のステップ",
+    "Assign owners for finance validation, enablement, and executive narrative.": "財務検証、enablement、経営向けストーリーの担当者を割り当てます。",
     "Prompt templates": "プロンプトテンプレート",
     "Mock shortcuts": "モックショートカット",
     "Decision tasks": "意思決定タスク",
@@ -178,6 +206,14 @@ const translations = {
     "Approve the enterprise pilot narrative and hold SMB expansion until pricing sensitivity is validated with finance.": "エンタープライズ向けパイロット方針を承認し、価格感度を財務で検証するまで SMB 拡大を保留します。",
     "Evidence strength": "証拠の強さ",
     "Evidence review": "証拠レビュー",
+    "Tool runs": "ツール実行",
+    "3 active": "3 件実行中",
+    "Source retrieval": "ソース取得",
+    "PDF, CSV, DOC": "PDF、CSV、DOC",
+    "Risk extraction": "リスク抽出",
+    "interviews + notes": "インタビュー + ノート",
+    "Memo drafting": "メモ作成",
+    "executive brief": "エグゼクティブブリーフ",
     "Live mock": "ライブモック",
     "Security review mentioned in 5 enterprise notes": "5 件のエンタープライズノートでセキュリティレビューに言及",
     "Q2 market scan · confidence high": "Q2 市場スキャン · 信頼度高",
@@ -336,6 +372,18 @@ const evidenceItems = [
   { title: "SMB discount tolerance still unresolved", meta: "Finance follow-up · needs owner" }
 ];
 
+const briefSections = [
+  ["Recommendation", "Approve an enterprise-first pilot and keep SMB expansion in discovery."],
+  ["Evidence", "Security review and rollout ownership appear across the highest-confidence sources."],
+  ["Next step", "Assign owners for finance validation, enablement, and executive narrative."]
+];
+
+const toolRuns = [
+  ["Source retrieval", "PDF, CSV, DOC", 92],
+  ["Risk extraction", "interviews + notes", 76],
+  ["Memo drafting", "executive brief", 64]
+];
+
 let streamTimer;
 
 function currentBriefText() {
@@ -439,6 +487,25 @@ function renderEvidence() {
   `).join("");
 }
 
+function renderBrief() {
+  briefDocument.innerHTML = briefSections.map(([title, body]) => `
+    <section>
+      <h3>${translateValue(title)}</h3>
+      <p>${translateValue(body)}</p>
+    </section>
+  `).join("");
+}
+
+function renderToolRuns() {
+  toolRunList.innerHTML = toolRuns.map(([name, detail, progress]) => `
+    <article class="tool-run">
+      <strong>${translateValue(name)}</strong>
+      <span>${translateValue(detail)}</span>
+      <progress max="100" value="${progress}"></progress>
+    </article>
+  `).join("");
+}
+
 paletteButton.addEventListener("click", openPalette);
 summarizeButton.addEventListener("click", () => streamText(currentBriefText()));
 themeButton.addEventListener("click", () => {
@@ -514,5 +581,7 @@ document.querySelectorAll("[data-lang]").forEach((button) => {
 renderTemplates();
 renderTasks();
 renderEvidence();
+renderBrief();
+renderToolRuns();
 translatePage();
 streamText(currentBriefText());

@@ -320,6 +320,7 @@ h2 {
 }
 
 .workflow-card,
+.brief-preview,
 .evidence-card {
   display: grid;
   gap: 12px;
@@ -332,7 +333,8 @@ h2 {
 .workflow-head,
 .template-button,
 .task-row,
-.evidence-row {
+.evidence-row,
+.tool-run {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -346,21 +348,24 @@ h2 {
 .workflow-head span,
 .template-button small,
 .task-row small,
-.evidence-row span {
+.evidence-row span,
+.tool-run span {
   color: var(--muted);
   font-size: 12px;
 }
 
 .template-list,
 .task-list,
-.evidence-list {
+.evidence-list,
+.tool-run-list {
   display: grid;
   gap: 8px;
 }
 
 .template-button,
 .task-row,
-.evidence-row {
+.evidence-row,
+.tool-run {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--line);
@@ -377,6 +382,29 @@ h2 {
 
 .task-row {
   justify-content: flex-start;
+}
+
+.brief-preview {
+  margin-bottom: 16px;
+}
+
+.brief-document {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.brief-document h3,
+.brief-document p {
+  margin: 0;
+}
+
+.brief-document p {
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .task-row input {
@@ -580,13 +608,20 @@ h2 {
   margin-top: 14px;
 }
 
-.evidence-row {
+.evidence-row,
+.tool-run {
   align-items: flex-start;
   flex-direction: column;
 }
 
-.evidence-row strong {
+.evidence-row strong,
+.tool-run strong {
   font-size: 13px;
+}
+
+.tool-run progress {
+  width: 100%;
+  accent-color: var(--accent);
 }
 
 .source-card {
